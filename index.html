@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Violin Note Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="stats-container">
+            <div class="timer">Time: <span id="timer">00:00</span></div>
+            <div class="xp">XP: <span id="xp-points">0</span></div>
+            <div class="accuracy">Accuracy: <span id="accuracy">100</span>%</div>
+        </div>
+        <canvas id="musicStaff" width="400" height="350"></canvas>
+        
+        <!-- Add note buttons -->
+        <div class="button-container">
+            <div class="note-buttons">
+                <button class="note-btn" data-note="A">A</button>
+                <button class="note-btn" data-note="B">B</button>
+                <button class="note-btn" data-note="C">C</button>
+                <button class="note-btn" data-note="D">D</button>
+                <button class="note-btn" data-note="E">E</button>
+                <button class="note-btn" data-note="F">F</button>
+                <button class="note-btn" data-note="G">G</button>
+            </div>
+            <div class="finger-buttons">
+                <button class="finger-btn" data-finger="0">0</button>
+                <button class="finger-btn" data-finger="1">1</button>
+                <button class="finger-btn" data-finger="2">2</button>
+                <button class="finger-btn" data-finger="3">3</button>
+                <button class="finger-btn" data-finger="4">4</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html> 
