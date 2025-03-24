@@ -31,10 +31,24 @@ let xpPoints = 0;
 let totalAttempts = 0;
 let correctAttempts = 0;
 
+// Define notes that need a sharp
+const sharpNotes = ['F4', 'C5', 'F5', 'G5'];
+
+// Function to check if a note needs a sharp
+function noteNeedsSharp(note) {
+    return sharpNotes.includes(note);
+}
+
 // Function to generate a random note
 function getRandomNote() {
     const randomIndex = Math.floor(Math.random() * notes.length);
-    return notes[randomIndex];
+    const note = notes[randomIndex];
+    
+    // For display and internal logic purposes, keep the note name as is
+    return note;
+    
+    // If we wanted to add sharp to the note name (e.g., F4♯), we could do:
+    // return sharpNotes.includes(note) ? note + '♯' : note;
 }
 
 // Function to draw the staff lines
@@ -137,6 +151,16 @@ function drawNote(note) {
     const noteX = 200; // Center position of the note
     drawLedgerLines(note, noteX);
 
+    // Draw sharp if needed (before drawing the note)
+    if (noteNeedsSharp(note)) {
+        // Position sharp symbol to the left of the note
+        const sharpX = noteX - 28; // Moved 2px closer to note (was 30px away)
+        const sharpY = notePositions[note]; // Same Y position as the note
+        
+        // Draw the sharp symbol with vertical centering - reduced by 10%
+        ctx.drawImage(images.sharp, sharpX - 15, sharpY - 23, 32, 47); // Was 36x52
+    }
+    
     // Save canvas state for note and stem
     ctx.save();
     ctx.translate(200, notePositions[note]); // Move to the note's center
@@ -219,7 +243,7 @@ function initGame() {
     
     // Preload images
     images.trebleClef.src = 'images/treble-clef.svg';
-    images.sharp.src = 'images/sharp.svg';
+    images.sharp.src = 'images/Sharp.svg';
     images.flat.src = 'images/flat.svg';
 
     // Wait for all images to load before starting
