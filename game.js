@@ -231,8 +231,45 @@ function updateStats() {
     document.getElementById('accuracy').textContent = accuracy;
 }
 
-// Modify the initGame function to start the timer
+// Add level dropdown functionality
+function setupLevelDropdown() {
+    const levelContainer = document.querySelector('.level');
+    const levelDisplay = document.getElementById('level-display');
+    const levelOptions = document.querySelectorAll('.level-option');
+
+    // Toggle dropdown on container click
+    levelContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        levelContainer.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!levelContainer.contains(e.target)) {
+            levelContainer.classList.remove('active');
+        }
+    });
+
+    // Handle level selection
+    levelOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const level = e.target.dataset.level;
+            levelDisplay.textContent = level;
+            levelContainer.classList.remove('active');
+            
+            // Update selected state
+            levelOptions.forEach(opt => opt.classList.remove('selected'));
+            e.target.classList.add('selected');
+        });
+    });
+}
+
+// Modify initGame to include level dropdown setup
 function initGame() {
+    // Setup level dropdown
+    setupLevelDropdown();
+    
     // Start the timer
     startTime = Date.now();
     if (timerInterval) clearInterval(timerInterval);
