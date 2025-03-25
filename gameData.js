@@ -357,7 +357,7 @@ const gameData = {
     },
     level10: {
       name: "Master Violinist Challenge",
-      description: "Test your knowledge of all notes and positions on the violin",
+      description: "Test your knowledge of all notes in first position on the violin",
       notes: ["G3", "G#3", "Ab3", "A3", "Bb3", "B3", "C4", "C#4", "Db4", "D4", "D4_alt", "D#4", "Eb4", "E4", "F4", "F#4", "G4", "G#4", "Ab4", "A4", "A4_alt", "A#4", "Bb4", "B4", "C5", "C#5", "D5", "D#5", "Eb5", "E5", "E5_alt", "F5", "F#5", "G5", "G#5", "Ab5", "A5", "A#5", "Bb5", "B5"],
       unlockRequirement: 100,
       sharps: true,
