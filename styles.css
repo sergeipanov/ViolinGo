@@ -109,6 +109,21 @@ canvas {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+}
+
+.level::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+    transition: transform 0.3s ease;
+}
+
+.level.active::after {
+    transform: rotate(180deg);
 }
 
 .level-description {
@@ -126,29 +141,12 @@ canvas {
     white-space: nowrap;
     z-index: 1000;
     display: none;
-}
-
-.level.active .level-description {
-    display: block;
-}
-
-.level-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 0.5rem;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    display: none;
     min-width: 400px;
     max-height: 400px;
     overflow-y: auto;
 }
 
-.level.active .level-options {
+.level.active .level-description {
     display: block;
 }
 
@@ -188,10 +186,6 @@ canvas {
     font-size: 1rem;
     line-height: 1.5;
     flex: 1;
-}
-
-.level-option::after {
-    display: none;
 }
 
 .level-dropdown {
