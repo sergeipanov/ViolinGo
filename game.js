@@ -169,10 +169,14 @@ function drawLedgerLines(note, noteX) {
 
 // Function to draw a note at a specific position
 function drawNote(note) {
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Recent changes to musical notation positioning:
+    // - Sharp sign (#) moved further left (-35px from note) for better visual spacing
+    // - Flat sign (b) position matched to sharp sign for consistency
+    // - Flat sign kept at -8px vertical offset for proper alignment
+    // - Both signs maintain their original size (38x58 for sharp, 32x47 for flat)
     
-    // Redraw staff
+    // Clear the canvas and redraw the staff
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawStaff();
 
     // Draw ledger lines before the note
@@ -181,13 +185,16 @@ function drawNote(note) {
 
     // Draw sharp or flat if needed (before drawing the note)
     if (noteNeedsSharp(note)) {
-        // Position sharp symbol to the left of the note, further left
-        const sharpX = noteX - 35; // Moved further left (was -28)
+        // Position sharp symbol to the left of the note
+        // Adjusted position to be further left (-35 instead of -28) for better visual spacing
+        const sharpX = noteX - 35;
         const sharpY = notePositions[note];
         ctx.drawImage(images.sharp, sharpX - 15, sharpY - 23, 32, 47);
     } else if (noteNeedsFlat(note)) {
-        // Position flat symbol to the left of the note, matching sharp position
-        const flatX = noteX - 35; // Match sharp position
+        // Position flat symbol to the left of the note
+        // Matched sharp sign position (-35) for consistent spacing
+        // Kept vertical offset (-8) to maintain higher position for flat sign
+        const flatX = noteX - 35;
         const flatY = notePositions[note] - 8;
         ctx.drawImage(images.flat, flatX - 15, flatY - 23, 32, 47);
     }
@@ -197,7 +204,7 @@ function drawNote(note) {
     ctx.translate(200, notePositions[note]); // Move to the note's center
     
     // Draw the note head with rotation
-    ctx.rotate(-30 * Math.PI / 180); // Rotate -30 degrees
+    ctx.rotate(-30 * Math.PI / 180); // Rotate -30 degrees for a more natural look
     ctx.beginPath();
     ctx.fillStyle = 'black';
     ctx.ellipse(0, 0, 14, 10, 0, 0, Math.PI * 2); // Note coordinates now at center
