@@ -12,7 +12,7 @@ let fingerGuessed = false;
 const notes = [
    'G3', 'Ab3', 'A3', 'Bb3' , 'B3', 'C4', 'C#4', 'Db4', 'D4',
    'D#4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'G#4' ,'Ab4','A4',
-   'A4_alt', 'Bb4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'Eb5', 'E5',
+   'Bb4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'Eb5', 'E5',
    'F5', 'F#5', 'G5', 'G#5', 'A5', 'A#5', 'Bb5', 'B5'
 ];
 
@@ -181,14 +181,14 @@ function drawNote(note) {
 
     // Draw sharp or flat if needed (before drawing the note)
     if (noteNeedsSharp(note)) {
-        // Position sharp symbol to the left of the note
-        const sharpX = noteX - 28;
+        // Position sharp symbol to the left of the note, further left
+        const sharpX = noteX - 35; // Moved further left (was -28)
         const sharpY = notePositions[note];
         ctx.drawImage(images.sharp, sharpX - 15, sharpY - 23, 32, 47);
     } else if (noteNeedsFlat(note)) {
-        // Position flat symbol to the left of the note
-        const flatX = noteX - 28;
-        const flatY = notePositions[note];
+        // Position flat symbol to the left of the note, matching sharp position
+        const flatX = noteX - 35; // Match sharp position
+        const flatY = notePositions[note] - 8;
         ctx.drawImage(images.flat, flatX - 15, flatY - 23, 32, 47);
     }
     
