@@ -242,4 +242,48 @@ canvas {
     padding: 10px;
     background-color: #f5f5f5;
     color: #333;
+}
+
+/* Level unlock popup styles */
+.level-unlock-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transform: translateX(120%);
+    transition: transform 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.level-unlock-popup.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.popup-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.popup-icon {
+    font-size: 24px;
+}
+
+.popup-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.note-btn:disabled,
+.finger-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 } 

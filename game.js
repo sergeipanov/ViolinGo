@@ -316,46 +316,39 @@ function getAudioFileName(note) {
     return note;
 }
 
-// Add this function to load audio files
-function loadAudioFiles() {
-    console.log('Starting to load audio files...');
-    notes.forEach(note => {
-        // Convert note name to audio file name
-        const audioFileName = getAudioFileName(note);
-        // Use relative path and proper URL encoding
-        const audioPath = `./audio/${encodeURIComponent(audioFileName)}.mp3`;
-        
-        console.log(`Loading audio file: ${audioPath}`);
-        const audio = new Audio();
-        audioFiles[note] = audio;
-        
-        // Add error handling for audio loading
-        audio.onerror = (e) => {
-            console.error(`Error loading audio for ${note}:`, e);
-            console.error(`Audio path attempted: ${audioPath}`);
-            // Try to get more details about the error
-            if (e.target.error) {
-                console.error('Audio error details:', e.target.error);
-            }
-        };
-        
-        audio.oncanplaythrough = () => {
-            console.log(`Audio loaded successfully for ${note}`);
-        };
-        
-        // Add load event handler
-        audio.addEventListener('load', () => {
-            console.log(`Audio load event fired for ${note}`);
+// Function to load audio files for specific notes
+function loadAudioFilesForNotes(notes) {
+    console.log('Loading audio files for notes:', notes);
+    const audioPromises = notes.map(note => {
+        return new Promise((resolve, reject) => {
+            const audioFileName = getAudioFileName(note);
+            const audioPath = `./audio/${encodeURIComponent(audioFileName)}.mp3`;
+            
+            console.log(`Loading audio file: ${audioPath}`);
+            const audio = new Audio();
+            audioFiles[note] = audio;
+            
+            // Add error handling for audio loading
+            audio.onerror = (e) => {
+                console.error(`Error loading audio for ${note}:`, e);
+                console.error(`Audio path attempted: ${audioPath}`);
+                if (e.target.error) {
+                    console.error('Audio error details:', e.target.error);
+                }
+                reject(new Error(`Failed to load audio for ${note}`));
+            };
+            
+            audio.oncanplaythrough = () => {
+                console.log(`Audio loaded successfully for ${note}`);
+                resolve();
+            };
+            
+            // Set the source after adding all event listeners
+            audio.src = audioPath;
         });
-        
-        // Add loadeddata event handler
-        audio.addEventListener('loadeddata', () => {
-            console.log(`Audio data loaded for ${note}`);
-        });
-
-        // Set the source after adding all event listeners
-        audio.src = audioPath;
     });
+
+    return Promise.all(audioPromises);
 }
 
 // Add this function to format the time
@@ -387,19 +380,76 @@ function isLevelUnlocked(level) {
     return xpPoints >= LEVEL_XP_REQUIREMENTS[level];
 }
 
+// Level descriptions for popup messages
+const LEVEL_DESCRIPTIONS = {
+    [LEVEL_NOTES_ON_TAPES]: "notes that use fingers on tapes",
+    [LEVEL_LOW_TWOS]: "low 2 finger position on all strings",
+    [LEVEL_HIGH_THREES]: "high 3 finger position on all strings",
+    [LEVEL_LOW_ONES_AND_FOURS]: "low 1 and low 4 finger positions",
+    [LEVEL_G_STRING]: "all notes in the G string",
+    [LEVEL_D_STRING]: "all notes in the D string",
+    [LEVEL_A_STRING]: "all notes in the A string",
+    [LEVEL_E_STRING]: "all notes in the E string",
+    [LEVEL_ENHARMONIC]: "enharmonic equivalents across all strings",
+    [LEVEL_ULTIMATE]: "all notes in first position on the violin"
+};
+
+// Function to show level unlock popup
+function showLevelUnlockPopup(level) {
+    const popup = document.getElementById('level-unlock-popup');
+    const popupText = popup.querySelector('.popup-text');
+    
+    // Set the popup text
+    popupText.textContent = `Congrats! Level ${level} Unlocked! You can now practice ${LEVEL_DESCRIPTIONS[level]}`;
+    
+    // Show the popup
+    popup.classList.add('show');
+    
+    // Hide the popup after 3 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 5000);
+}
+
 // Function to update level options UI
 function updateLevelOptions() {
     const levelOptions = document.querySelectorAll('.level-option');
+    let newlyUnlockedLevel = null;
+    
     levelOptions.forEach(option => {
         const level = parseInt(option.dataset.level);
+        const wasLocked = option.classList.contains('locked');
+        
         if (level === LEVEL_OPEN_STRINGS) {
             option.classList.remove('locked');
         } else if (isLevelUnlocked(level)) {
             option.classList.remove('locked');
+            // Show popup if level was previously locked
+            if (wasLocked) {
+                showLevelUnlockPopup(level);
+                newlyUnlockedLevel = level; // Store the newly unlocked level
+            }
         } else {
             option.classList.add('locked');
         }
     });
+
+    // If a new level was unlocked, automatically switch to it
+    if (newlyUnlockedLevel) {
+        const levelDisplay = document.getElementById('level-display');
+        const levelOption = document.querySelector(`.level-option[data-level="${newlyUnlockedLevel}"]`);
+        
+        // Update display
+        levelDisplay.textContent = newlyUnlockedLevel;
+        
+        // Update selected state
+        levelOptions.forEach(opt => opt.classList.remove('selected'));
+        levelOption.classList.add('selected');
+        
+        // Update game level
+        currentLevel = newlyUnlockedLevel;
+        updateGameState();
+    }
 }
 
 // Add level dropdown functionality
@@ -458,22 +508,47 @@ function updateGameState() {
         btn.classList.remove('correct', 'incorrect');
     });
     
-    // Generate and draw new note for the current level
-    currentNote = getRandomNote();
-    drawNote(currentNote);
+    // Get notes for current level
+    const levelNotes = getLevelNotes();
     
-    // Reset timer
-    startTime = Date.now();
-    updateTimer();
+    // Disable all buttons while loading
+    document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
+        btn.disabled = true;
+    });
     
-    // Stop any playing audio
-    Object.values(audioFiles).forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
+    // Load audio files for the current level's notes
+    loadAudioFilesForNotes(levelNotes).then(() => {
+        // Generate and draw new note for the current level
+        currentNote = getRandomNote();
+        drawNote(currentNote);
+        
+        // Reset timer
+        startTime = Date.now();
+        updateTimer();
+        
+        // Stop any playing audio
+        Object.values(audioFiles).forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        // Add a small delay before re-enabling buttons to ensure audio is ready
+        setTimeout(() => {
+            // Re-enable all buttons after loading
+            document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
+                btn.disabled = false;
+            });
+        }, 500); // Wait 500ms after audio loads before enabling buttons
+    }).catch(error => {
+        console.error('Error loading audio files for level:', error);
+        // Re-enable buttons even if there's an error
+        document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
+            btn.disabled = false;
+        });
     });
 }
 
-// Modify initGame to include level dropdown setup
+// Modify initGame to load initial level's audio files
 function initGame() {
     // Setup level dropdown
     setupLevelDropdown();
@@ -483,22 +558,23 @@ function initGame() {
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 1000);
     
-    // Load audio files
-    loadAudioFiles();
-    
     // Preload images
     console.log('Loading images...');
     images.trebleClef.src = 'images/treble-clef.svg';
     images.sharp.src = 'images/sharp.svg';
     images.flat.src = 'images/flat.svg';
 
-    // Wait for all images to load before starting
+    // Get initial level notes
+    const initialNotes = getLevelNotes();
+
+    // Wait for all images and initial audio to load before starting
     Promise.all([
         new Promise(resolve => images.trebleClef.onload = resolve),
         new Promise(resolve => images.sharp.onload = resolve),
-        new Promise(resolve => images.flat.onload = resolve)
+        new Promise(resolve => images.flat.onload = resolve),
+        loadAudioFilesForNotes(initialNotes)
     ]).then(() => {
-        console.log('Treble clef loaded');
+        console.log('All resources loaded');
         drawStaff();
         currentNote = getRandomNote();
         drawNote(currentNote);
@@ -623,7 +699,7 @@ document.querySelectorAll('.finger-btn').forEach(button => {
     });
 });
 
-// Modify the checkBothCorrect function
+// Modify the checkBothCorrect function to handle audio playback more safely
 function checkBothCorrect() {
     // Check if we have all required correct answers
     const needsSharpFlat = noteNeedsSharp(currentNote) || noteNeedsFlat(currentNote);
@@ -648,31 +724,33 @@ function checkBothCorrect() {
         xpPoints++;
         updateStats();
         
-        // Play the audio for the current note
+        // Play the audio for the current note with retry mechanism
         const audio = audioFiles[currentNote];
         if (audio) {
-            // Check if the audio is ready to play
-            if (audio.readyState >= 2) { // HAVE_FUTURE_DATA or HAVE_ENOUGH_DATA
-                audio.currentTime = 0;
-                audio.play().catch(error => {
-                    console.error('Error playing audio:', error);
-                    console.error('Audio state:', {
-                        readyState: audio.readyState,
-                        error: audio.error,
-                        src: audio.src
+            const playAudio = () => {
+                if (audio.readyState >= 2) { // HAVE_FUTURE_DATA or HAVE_ENOUGH_DATA
+                    audio.currentTime = 0;
+                    audio.play().catch(error => {
+                        console.error('Error playing audio:', error);
+                        console.error('Audio state:', {
+                            note: currentNote,
+                            readyState: audio.readyState,
+                            error: audio.error,
+                            src: audio.src
+                        });
                     });
-                });
-            } else {
-                console.error('Audio not ready to play:', {
-                    note: currentNote,
-                    readyState: audio.readyState,
-                    error: audio.error,
-                    src: audio.src
-                });
-            }
-        } else {
-            console.error('No audio found for note:', currentNote);
+                } else {
+                    // If audio isn't ready, wait a bit and try again
+                    setTimeout(playAudio, 100);
+                }
+            };
+            playAudio();
         }
+
+        // Disable buttons while transitioning
+        document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
+            btn.disabled = true;
+        });
 
         setTimeout(() => {
             // Reset all states
@@ -689,6 +767,11 @@ function checkBothCorrect() {
             // Generate and draw new note
             currentNote = getRandomNote();
             drawNote(currentNote);
+
+            // Re-enable buttons after drawing new note
+            document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
+                btn.disabled = false;
+            });
         }, 1500);
     }
 }
