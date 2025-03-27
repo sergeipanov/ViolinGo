@@ -10,18 +10,18 @@ let fingerGuessed = false;
 
 // Define note range (G3 to B5)
 const notes = [
-   'G3', 'Ab3', 'A3', 'Bb3' , 'B3', 'C4', 'C#4', 'Db4', 'D4',
-   'D#4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'G#4' ,'Ab4','A4',
-   'Bb4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'Eb5', 'E5',
-   'F5', 'F#5', 'G5', 'G#5', 'A5', 'A#5', 'Bb5', 'B5'
+   'G3', 'Aflat3', 'A3', 'Bflat3', 'B3', 'C4', 'Csharp4', 'Dflat4', 'D4',
+   'Dsharp4', 'Eflat4', 'E4', 'F4', 'Fsharp4', 'G4', 'Gsharp4', 'Aflat4', 'A4',
+   'Bflat4', 'B4', 'C5', 'Csharp5', 'D5', 'Dsharp5', 'Eflat5', 'E5',
+   'F5', 'Fsharp5', 'G5', 'Gsharp5', 'A5', 'Asharp5', 'Bflat5', 'B5'
 ];
 
 // Define correct finger positions for each note
 const fingerPositions = {
-   'G3': ['0'], 'Ab3':['L1'], 'A3': ['1'], 'Bb3': ['L2'], 'B3': ['H2'], 'C4': ['3'], 'C#4': ['H3'], 'Db4': ['L4'], 'D4': ['0'],
-   'D#4': ['L1'], 'Eb4': ['L1'], 'E4': ['1'], 'F4': ['L2'], 'F#4': ['H2'], 'G4': ['3'], 'G#4': ['H3'], 'Ab4': ['L4'], 
-   'A4': ['0'], 'Bb4': ['L1'], 'B4': ['1'], 'C5': ['L2'], 'C#5': ['H2'], 'D5': ['3'], 'D#5': ['H3'], 'Eb5': ['L4'], 
-   'E5': ['0'], 'F5': ['L1'], 'F#5': ['1'], 'G5': ['L2'], 'G#5': ['H2'], 'A5': ['3'], 'A#5': ['H3'], 'Bb5': ['L4'], 'B5': ['4']
+   'G3': ['0'], 'Aflat3': ['L1'], 'A3': ['1'], 'Bflat3': ['L2'], 'B3': ['H2'], 'C4': ['3'], 'Csharp4': ['H3'], 'Dflat4': ['L4'], 'D4': ['0'],
+   'Dsharp4': ['L1'], 'Eflat4': ['L1'], 'E4': ['1'], 'F4': ['L2'], 'Fsharp4': ['H2'], 'G4': ['3'], 'Gsharp4': ['H3'], 'Aflat4': ['L4'], 
+   'A4': ['0'], 'Bflat4': ['L1'], 'B4': ['1'], 'C5': ['L2'], 'Csharp5': ['H2'], 'D5': ['3'], 'Dsharp5': ['H3'], 'Eflat5': ['L4'], 
+   'E5': ['0'], 'F5': ['L1'], 'Fsharp5': ['1'], 'G5': ['L2'], 'Gsharp5': ['H2'], 'A5': ['3'], 'Asharp5': ['H3'], 'Bflat5': ['L4'], 'B5': ['4']
 };
 
 // Add at the top with other state variables
@@ -38,8 +38,8 @@ let fingerNumberGuessed = false;
 let fingerPositionGuessed = false;
 
 // Define notes that need a sharp
-const sharpNotes = ['C#4', 'F#4', 'G#4', 'C#5', 'D#5', 'F#5', 'G#5', 'A#5'];
-const flatNotes = ['Ab3', 'Bb3', 'Db4', 'Eb4', 'Ab4', 'Bb4', 'Eb5', 'Bb5'];
+const sharpNotes = ['Csharp4', 'Fsharp4', 'Gsharp4', 'Csharp5', 'Dsharp5', 'Fsharp5', 'Gsharp5', 'Asharp5'];
+const flatNotes = ['Aflat3', 'Bflat3', 'Dflat4', 'Eflat4', 'Aflat4', 'Bflat4', 'Eflat5', 'Bflat5'];
 
 // Function to check if a note needs a sharp
 function noteNeedsSharp(note) {
@@ -92,40 +92,40 @@ function drawStaff() {
 const notePositions = {
    // Below staff
    'G3': 280, // Lowest note - below two ledger lines
-   'Ab3': 270, // L1 On second ledger line
+   'Aflat3': 270, // L1 On second ledger line
    'A3': 270, // On second ledger line
-   'Bb3': 260, // L2 On second ledger line
+   'Bflat3': 260, // L2 On second ledger line
    'B3': 260, // Between ledger lines
    'C4': 250, // On first ledger line
-   'C#4': 250, // On first ledger line
-   'Db4': 240, // On first ledger line
+   'Csharp4': 250, // On first ledger line
+   'Dflat4': 240, // On first ledger line
    'D4': 240, // Space below bottom line
-   'D#4': 240, // Sharp on D4
-   'Eb4': 230, //L1 On first ledger line
+   'Dsharp4': 240, // Sharp on D4
+   'Eflat4': 230, //L1 On first ledger line
    'E4': 230, //1 On first ledger line
    'F4': 220, // L2 On first ledger line
-   'F#4': 220, //H2 on first space
+   'Fsharp4': 220, //H2 on first space
    'G4': 210, // Second line
-   'G#4': 210, // H3 on second line
-   'Ab4': 200, // L4 on second space
+   'Gsharp4': 210, // H3 on second line
+   'Aflat4': 200, // L4 on second space
    'A4': 200, // Second space
    'A4_alt': 200, // Open string on second space
-   'Bb4': 190, // L1 on third line
+   'Bflat4': 190, // L1 on third line
    'B4': 190, // Third line
    'C5': 180, //L2
-   'C#5': 180, //H2 ird space
+   'Csharp5': 180, //H2 ird space
    'D5': 170, // Fourth line
-   'D#5': 170, // H3 on fourth line
-   'Eb5': 160, // L4 on fourth space
+   'Dsharp5': 170, // H3 on fourth line
+   'Eflat5': 160, // L4 on fourth space
    'E5': 160, // Fourth space
    'E5_alt': 160, // Open string on fourth space
    'F5': 150, // L1 on E stringFifth line (top line)
-   'F#5': 150, // 1 on E string 5th line
+   'Fsharp5': 150, // 1 on E string 5th line
    'G5': 140, // Fifth space
-   'G#5': 140, // H5 on fifth space
+   'Gsharp5': 140, // H5 on fifth space
    'A5': 130, // Sixth line
-   'A#5': 130, // H3 on E string
-   'Bb5': 120,//     'Ab5': 130, // Sixth line
+   'Asharp5': 130, // H3 on E string
+   'Bflat5': 120, // Sixth line
    'B5': 120  // Sixth space
 };
 
@@ -142,14 +142,14 @@ function drawLedgerLines(note, noteX) {
     
     // Notes below the staff (G3 to D4)
     if (noteY >= 240) {
-        // Two ledger lines for G3, Ab3, A3
+        // Two ledger lines for G3, Aflat3, A3
         if (noteY >= 270) {
             ctx.moveTo(noteX - lineLength/2, 250); // First ledger line
             ctx.lineTo(noteX + lineLength/2, 250);
             ctx.moveTo(noteX - lineLength/2, 270); // Second ledger line
             ctx.lineTo(noteX + lineLength/2, 270);
         }
-        // One ledger line for Bb3, B3, C4, C#4, Db4
+        // One ledger line for Bflat3, B3, C4, Csharp4, Dflat4
         else if (noteY >= 250) {
             ctx.moveTo(noteX - lineLength/2, 250); // First ledger line
             ctx.lineTo(noteX + lineLength/2, 250);
@@ -158,7 +158,7 @@ function drawLedgerLines(note, noteX) {
     }
     // Notes above the staff (G5 to B5)
     else if (noteY <= 140) {
-        // One ledger line for A5, A#5, Bb5, B5
+        // One ledger line for A5, Asharp5, Bflat5, B5
         if (noteY <= 130) {
             ctx.moveTo(noteX - lineLength/2, 130); // First ledger line above staff
             ctx.lineTo(noteX + lineLength/2, 130);
@@ -239,12 +239,19 @@ const images = {
     flat: new Image()
 };
 
+// Add this function to convert note names to file names
+function convertNoteToFileName(note) {
+    // Convert # to sharp in the note name
+    return note.replace('#', 'sharp');
+}
+
 // Add this function to load audio files
 function loadAudioFiles() {
     console.log('Starting to load audio files...');
     notes.forEach(note => {
-        // Use relative path and proper URL encoding
-        const audioPath = `./audio/${encodeURIComponent(note)}.mp3`;
+        // Convert note name to file name format
+        const fileName = convertNoteToFileName(note);
+        const audioPath = `./audio/${fileName}.mp3`;
         
         console.log(`Loading audio file: ${audioPath}`);
         const audio = new Audio();
@@ -385,7 +392,9 @@ document.querySelectorAll('.note-btn').forEach(button => {
         
         // Check if this is a note button (A, B, C, etc.)
         if (selectedType === 'note') {
-            isCorrect = selectedNote === currentNote.charAt(0);
+            // Convert selected note to match the format in currentNote
+            const formattedNote = selectedNote + currentNote.slice(1);
+            isCorrect = formattedNote === currentNote;
             if (isCorrect) {
                 noteGuessed = true;
                 // If note doesn't need sharp/flat, mark sharpFlatGuessed as true
