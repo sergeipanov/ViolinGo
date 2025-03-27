@@ -239,12 +239,20 @@ const images = {
     flat: new Image()
 };
 
+// Function to convert note name to audio file name
+function getAudioFileName(note) {
+    // No conversion needed - return the note name as is
+    return note;
+}
+
 // Add this function to load audio files
 function loadAudioFiles() {
     console.log('Starting to load audio files...');
     notes.forEach(note => {
+        // Convert note name to audio file name
+        const audioFileName = getAudioFileName(note);
         // Use relative path and proper URL encoding
-        const audioPath = `./audio/${encodeURIComponent(note)}.mp3`;
+        const audioPath = `./audio/${encodeURIComponent(audioFileName)}.mp3`;
         
         console.log(`Loading audio file: ${audioPath}`);
         const audio = new Audio();
