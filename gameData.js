@@ -281,91 +281,102 @@ const gameData = {
       name: "Level 1: Open Strings",
       description: "Learn the open strings of the violin",
       notes: ["G3", "D4", "A4", "E5"],
-      unlockRequirement: 10, // Need 10 XP to unlock level 2
+      unlockRequirement: 0, // Need 10 XP to unlock level 2
       sharps: false,
-      flats: false
+      flats: false,
+      enharmonics: false
     },
     level2: {
       name: "Level 2: Notes on Tapes",
       description: "Learn notes that use fingers on tapes",
       notes: ["G3", "A3", "B3", "C4", "D4", "E4", "F#4", "G4", "A4", "B4", "C#5", "D5", "E5", "F#5", "G#5", "A5", "B5"],
-      unlockRequirement: 20, // Need 20 XP total to unlock level 3
+      unlockRequirement: 10, // Need 20 XP total to unlock level 3
       sharps: true,
-      flats: false
+      flats: false,
+      enharmonics: false
     },
     level3: {
       name: "Level 3: Low 2's",
       description: "Introduction of low 2 finger position on all strings",
-      notes: ["G3", "A3", "Bb3", "B3", "C4", "D4", "E4", "F4", "F#4", "G4", "A4", "B4", "C5", "C#5", "D5", "E5", "F#5", "G5" , "G#5" , "A5" , "B5"],
-      unlockRequirement: 30, // Need 30 XP total to unlock level 4
+      notes: ["G3", "A3", "Bb3", "B3", "C4", "D4", "E4", "F4", "F#4", "G4", "A4", "B4", "C5", "C#5", "D5", "E5", "F#5", "G5", "G#5", "A5", "B5"],
+      unlockRequirement: 20, // Need 30 XP total to unlock level 4
       sharps: true,
-      flats: true
+      flats: true,
+      enharmonics: false
     },
     level4: {
-      name: "Level 4: Low 1's and Low 4's",
+      name: "Level 4: High 3's",
+      description: "Introduction of high 3 finger position on all strings",
+      notes: ["G3", "A3", "B3", "C4", "C#4","D4", "E4", "F#4", "G4", "G#4", "A4", "B4", "C#5", "D5", "D#5", "E5", "F#5", "G#5", "A5", "A#5", "B5"],
+      unlockRequirement: 30,
+      sharps: true,
+      flats: true,
+      enharmonics: false
+    },
+    level5: {
+      name: "Level 5: Low 1's and Low 4's",
       description: "Introduction of low 1 and low 4 finger positions",
-      notes: ["G3", "G#3", "Ab3", "A3", "Bb3", "B3", "C4", "C#4", "Db4", "D4", "D#4", "Eb4", "E4", "F4", "F#4", "G4", "G#4", "Ab4", "A4", "Bb4", "B4", "C5", "C#5", "D5", "D#5", "Eb5", "E5", "F5", "F#5", "G5", "G#5" , "A5", "A#5", "Bb5" , "B5"],
+      notes: ["G3", "Ab3", "A3", "Bb3", "B3", "C4", "Db4", "D4", "Eb4", "E4", "F4", "F#4", "G4", "Ab4", "A4", "Bb4", "B4", "C5", "C#5", "D5", "Eb5", "E5", "F5", "F#5", "G5", "G#5", "A5", "Bb5"],
       unlockRequirement: 40,
       sharps: true,
       flats: true,
-      enharmonics: true
+      enharmonics: false
     },
-    level5: {
-      name: "G String Practice",
+    level6: {
+      name: "Level 6: G String Practice",
       description: "Focus on all notes in the G string",
-      notes: ["G3", "G#3", "Ab3", "A3", "Bb3", "A#3", "B3", "C4", "C#4", "Db4", "D4"],
+      notes: ["G3","Ab3", "A3", "Bb3", "B3", "C4", "C#4", "Db4"],
       unlockRequirement: 50,
       sharps: true,
       flats: true,
       enharmonics: true
     },
-    level6: {
-      name: "D String Practice",
+    level7: {
+      name: "Level 7: D String Practice",
       description: "Focus on all notes in the D string",
-      notes: ["D4_alt", "D#4", "Eb4", "E4", "F4", "F#4", "G4", "G#4", "Ab4", "A4"],
+      notes: ["D4", "Eb4", "E4", "F4", "F#4", "G4", "G#4", "Ab4"],
       unlockRequirement: 60,
       sharps: true,
       flats: true,
       enharmonics: true
     },
-    level7: {
-      name: "A String Practice",
+    level8: {
+      name: "Level 8: A String Practice",
       description: "Focus on all notes in the A string",
-      notes: ["A4_alt", "A#4", "Bb4", "B4", "C5", "C#5", "D5", "D#5", "Eb5", "E5"],
+      notes: ["A4", "Bb4", "B4", "C5", "C#5", "D5", "D#5", "Eb5"],
       unlockRequirement: 70,
       sharps: true,
       flats: true,
       enharmonics: true
     },
-    level8: {
-      name: "E String Practice",
+    level9: {
+      name: "Level 9: E String Practice",
       description: "Focus on all notes in the E string",
-      notes: ["E5_alt", "F5", "F#5", "G5", "G#5", "Ab5", "A5", "A#5", "Bb5", "B5"],
+      notes: ["E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "Bb5", "B5"],
       unlockRequirement: 80,
       sharps: true,
       flats: true,
       enharmonics: true
     },
-    level9: {
-      name: "Enharmonic Challenge",
+    level10: {
+      name: "Level 10: Enharmonic Challenge",
       description: "Master enharmonic equivalents across all strings",
-      notes: ["G#3", "Ab3", "A#3", "Bb3", "C#4", "Db4", "D#4", "Eb4", "G#4", "Ab4", "A#4", "Bb4", "D#5", "Eb5", "G#5", "Ab5", "A#5", "Bb5"],
+      notes: ["C#4", "Db4", "G#4", "Ab4", "D#5", "Eb5", "A#5", "Bb5"],
       unlockRequirement: 90,
       sharps: true,
       flats: true,
-      enharmonics: true
+      enharmonics: true,
+     
     },
-    level10: {
-      name: "Master Violinist Challenge",
-      description: "Test your knowledge of all notes in first position on the violin",
-      notes: ["G3", "G#3", "Ab3", "A3", "Bb3", "B3", "C4", "C#4", "Db4", "D4", "D4_alt", "D#4", "Eb4", "E4", "F4", "F#4", "G4", "G#4", "Ab4", "A4", "A4_alt", "A#4", "Bb4", "B4", "C5", "C#5", "D5", "D#5", "Eb5", "E5", "E5_alt", "F5", "F#5", "G5", "G#5", "Ab5", "A5", "A#5", "Bb5", "B5"],
+    level11: {
+      name: "Level 11: Ultimate Challenge",
+      description: "Test your mastery with increased speed requirements and higher accuracy demands",
+      notes: ["G3","Ab3", "A3", "Bb3", "B3", "C4", "C#4", "Db4", "D4", "Eb4", "E4", "F4", "F#4", "G4", "G#4", "Ab4", "A4", "Bb4", "B4", "C5", "C#5", "D5", "D#5", "Eb5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "Bb5", "B5"],
       unlockRequirement: 100,
       sharps: true,
-      flats: true, 
+      flats: true,
       enharmonics: true,
-      timer: true,
-      minAccuracy: 85
+      
     }
   },
-}
-  
+}  
