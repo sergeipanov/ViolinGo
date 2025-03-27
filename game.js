@@ -26,6 +26,21 @@ const LEVEL_E_STRING = 9;
 const LEVEL_ENHARMONIC = 10;
 const LEVEL_ULTIMATE = 11;
 
+// XP requirements for each level
+const LEVEL_XP_REQUIREMENTS = {
+    [LEVEL_OPEN_STRINGS]: 0,      // Level 1: No requirement
+    [LEVEL_NOTES_ON_TAPES]: 10,   // Level 2: 10 XP
+    [LEVEL_LOW_TWOS]: 20,         // Level 3: 20 XP
+    [LEVEL_HIGH_THREES]: 30,      // Level 4: 30 XP
+    [LEVEL_LOW_ONES_AND_FOURS]: 40, // Level 5: 40 XP
+    [LEVEL_G_STRING]: 50,         // Level 6: 50 XP
+    [LEVEL_D_STRING]: 60,         // Level 7: 60 XP
+    [LEVEL_A_STRING]: 70,         // Level 8: 70 XP
+    [LEVEL_E_STRING]: 80,         // Level 9: 80 XP
+    [LEVEL_ENHARMONIC]: 90,       // Level 10: 90 XP
+    [LEVEL_ULTIMATE]: 100         // Level 11: 100 XP
+};
+
 // Get canvas and context
 const canvas = document.getElementById('musicStaff');
 console.log('Canvas element:', canvas);
@@ -364,6 +379,27 @@ function updateStats() {
     document.getElementById('xp-points').textContent = xpPoints;
     const accuracy = totalAttempts === 0 ? 100 : Math.round((correctAttempts / totalAttempts) * 100);
     document.getElementById('accuracy').textContent = accuracy;
+    updateLevelOptions();
+}
+
+// Function to check if a level is unlocked
+function isLevelUnlocked(level) {
+    return xpPoints >= LEVEL_XP_REQUIREMENTS[level];
+}
+
+// Function to update level options UI
+function updateLevelOptions() {
+    const levelOptions = document.querySelectorAll('.level-option');
+    levelOptions.forEach(option => {
+        const level = parseInt(option.dataset.level);
+        if (level === LEVEL_OPEN_STRINGS) {
+            option.classList.remove('locked');
+        } else if (isLevelUnlocked(level)) {
+            option.classList.remove('locked');
+        } else {
+            option.classList.add('locked');
+        }
+    });
 }
 
 // Add level dropdown functionality
@@ -387,21 +423,24 @@ function setupLevelDropdown() {
     levelOptions.forEach(option => {
         option.addEventListener('click', (e) => {
             e.stopPropagation();
-            const levelNumber = option.querySelector('.level-number').textContent;
+            const levelNumber = parseInt(option.dataset.level);
             
-            // Update display
-            levelDisplay.textContent = levelNumber;
-            
-            // Update selected state
-            levelOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-            
-            // Close dropdown
-            levelContainer.classList.remove('active');
-            
-            // Update game level
-            currentLevel = parseInt(levelNumber);
-            updateGameState();
+            // Check if level is unlocked
+            if (levelNumber === LEVEL_OPEN_STRINGS || isLevelUnlocked(levelNumber)) {
+                // Update display
+                levelDisplay.textContent = levelNumber;
+                
+                // Update selected state
+                levelOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                // Close dropdown
+                levelContainer.classList.remove('active');
+                
+                // Update game level
+                currentLevel = levelNumber;
+                updateGameState();
+            }
         });
     });
 }
