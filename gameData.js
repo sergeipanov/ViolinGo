@@ -1,3 +1,16 @@
+// Level constants
+const LEVEL_OPEN_STRINGS = 1;
+const LEVEL_NOTES_ON_TAPES = 2;
+const LEVEL_LOW_TWOS = 3;
+const LEVEL_HIGH_THREES = 4;
+const LEVEL_LOW_ONES_AND_FOURS = 5;
+const LEVEL_G_STRING = 6;
+const LEVEL_D_STRING = 7;
+const LEVEL_A_STRING = 8;
+const LEVEL_E_STRING = 9;
+const LEVEL_ENHARMONIC = 10;
+const LEVEL_ULTIMATE = 11;
+
 // This contains all game data
 const gameData = {
   // All possible notes in the game

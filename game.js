@@ -1,3 +1,31 @@
+// Constants for note positions
+const NOTE_POSITIONS = {
+    G3: 0, D4: 1, A4: 2, E5: 3
+};
+
+// Constants for finger positions
+const L1 = 'L1'; // Low 1
+const H1 = 'H1'; // High 1
+const L2 = 'L2'; // Low 2
+const H2 = 'H2'; // High 2
+const L3 = 'L3'; // Low 3
+const H3 = 'H3'; // High 3
+const L4 = 'L4'; // Low 4
+const H4 = 'H4'; // High 4
+
+// Level constants
+const LEVEL_OPEN_STRINGS = 1;
+const LEVEL_NOTES_ON_TAPES = 2;
+const LEVEL_LOW_TWOS = 3;
+const LEVEL_HIGH_THREES = 4;
+const LEVEL_LOW_ONES_AND_FOURS = 5;
+const LEVEL_G_STRING = 6;
+const LEVEL_D_STRING = 7;
+const LEVEL_A_STRING = 8;
+const LEVEL_E_STRING = 9;
+const LEVEL_ENHARMONIC = 10;
+const LEVEL_ULTIMATE = 11;
+
 // Get canvas and context
 const canvas = document.getElementById('musicStaff');
 console.log('Canvas element:', canvas);
@@ -7,6 +35,9 @@ console.log('Canvas context:', ctx);
 let currentNote = null;
 let noteGuessed = false;
 let fingerGuessed = false;
+
+// Add currentLevel variable with other state variables
+let currentLevel = LEVEL_OPEN_STRINGS; // Default to Level 1
 
 // Define note range (G3 to B5)
 const notes = [
@@ -56,16 +87,41 @@ function isAlternatePosition(note) {
     return note.endsWith('_alt');
 }
 
+// Function to get notes for current level
+function getLevelNotes() {
+    switch(currentLevel) {
+        case LEVEL_OPEN_STRINGS:
+            return ['G3', 'D4', 'A4', 'E5'];
+        case LEVEL_NOTES_ON_TAPES:
+            return ['G3', 'A3', 'B3', 'C4', 'D4', 'E4', 'F#4', 'G4', 'A4', 'B4', 'C#5', 'D5', 'E5', 'F#5', 'G#5', 'A5', 'B5'];
+        case LEVEL_LOW_TWOS:
+            return ['G3', 'A3', 'Bb3', 'B3', 'C4', 'D4', 'E4', 'F4', 'F#4', 'G4', 'A4', 'B4', 'C5', 'C#5', 'D5', 'E5', 'F#5', 'G5', 'G#5', 'A5', 'B5'];
+        case LEVEL_HIGH_THREES:
+            return ['G3', 'A3', 'B3', 'C4', 'C#4', 'D4', 'E4', 'F#4', 'G4', 'G#4', 'A4', 'B4', 'C#5', 'D5', 'D#5', 'E5', 'F#5', 'G#5', 'A5', 'A#5', 'B5'];
+        case LEVEL_LOW_ONES_AND_FOURS:
+            return ['G3', 'Ab3', 'A3', 'Bb3', 'B3', 'C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5', 'C#5', 'D5', 'Eb5', 'E5', 'F5', 'F#5', 'G5', 'G#5', 'A5', 'Bb5'];
+        case LEVEL_G_STRING:
+            return ['G3', 'Ab3', 'A3', 'Bb3', 'B3', 'C4', 'C#4', 'Db4'];
+        case LEVEL_D_STRING:
+            return ['D4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'Ab4'];
+        case LEVEL_A_STRING:
+            return ['A4', 'Bb4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'Eb5'];
+        case LEVEL_E_STRING:
+            return ['E5', 'F5', 'F#5', 'G5', 'G#5', 'A5', 'A#5', 'Bb5', 'B5'];
+        case LEVEL_ENHARMONIC:
+            return ['C#4', 'Db4', 'G#4', 'Ab4', 'D#5', 'Eb5', 'A#5', 'Bb5'];
+        case LEVEL_ULTIMATE:
+            return ['G3', 'Ab3', 'A3', 'Bb3', 'B3', 'C4', 'C#4', 'Db4', 'D4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'Eb5', 'E5', 'F5', 'F#5', 'G5', 'G#5', 'A5', 'A#5', 'Bb5', 'B5'];
+        default:
+            return ['G3', 'D4', 'A4', 'E5']; // Default to open strings
+    }
+}
+
 // Function to generate a random note
 function getRandomNote() {
-    const randomIndex = Math.floor(Math.random() * notes.length);
-    const note = notes[randomIndex];
-    
-    // For display and internal logic purposes, keep the note name as is
-    return note;
-    
-    // If we wanted to add sharp to the note name (e.g., F4♯), we could do:
-    // return sharpNotes.includes(note) ? note + '♯' : note;
+    const levelNotes = getLevelNotes();
+    const randomIndex = Math.floor(Math.random() * levelNotes.length);
+    return levelNotes[randomIndex];
 }
 
 // Function to draw the staff lines
@@ -347,6 +403,34 @@ function setupLevelDropdown() {
             currentLevel = parseInt(levelNumber);
             updateGameState();
         });
+    });
+}
+
+// Function to update game state when level changes
+function updateGameState() {
+    // Reset game state
+    noteGuessed = false;
+    sharpFlatGuessed = false;
+    fingerNumberGuessed = false;
+    fingerPositionGuessed = false;
+    
+    // Reset button states
+    document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
+        btn.classList.remove('correct', 'incorrect');
+    });
+    
+    // Generate and draw new note for the current level
+    currentNote = getRandomNote();
+    drawNote(currentNote);
+    
+    // Reset timer
+    startTime = Date.now();
+    updateTimer();
+    
+    // Stop any playing audio
+    Object.values(audioFiles).forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
     });
 }
 
