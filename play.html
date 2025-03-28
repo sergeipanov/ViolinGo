@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViolinGo - Play</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html" class="nav-btn home-btn">Violin Go</a>
+        <a href="learn.html" class="nav-btn">Learn</a>
+        <a href="play.html" class="nav-btn active">Play</a>
+        <a href="about.html" class="nav-btn">About</a>
+    </div>
+    <div class="game-container">
+        <div class="stats-container">
+            <div class="timer">Time: <span id="timer">00:00</span></div>
+            <div class="xp">XP: <span id="xp-points">0</span></div>
+            <div class="accuracy">Accuracy: <span id="accuracy">100</span>%</div>
+            <div class="level">
+                <div class="level-display">Level <span id="level-display">1</span></div>
+                <div class="level-options">
+                    <div class="level-option" data-level="1">
+                        <span class="level-number">1</span>
+                        <span class="level-name">Open Strings</span>
+                        <span class="level-xp">No XP Required</span>
+                    </div>
+                    <div class="level-option locked" data-level="2">
+                        <span class="level-number">2</span>
+                        <span class="level-name">Notes on Tapes</span>
+                        <span class="level-xp">Requires 10 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="3">
+                        <span class="level-number">3</span>
+                        <span class="level-name">Low 2's</span>
+                        <span class="level-xp">Requires 20 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="4">
+                        <span class="level-number">4</span>
+                        <span class="level-name">High 3's</span>
+                        <span class="level-xp">Requires 30 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="5">
+                        <span class="level-number">5</span>
+                        <span class="level-name">Low 1's and 4's</span>
+                        <span class="level-xp">Requires 40 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="6">
+                        <span class="level-number">6</span>
+                        <span class="level-name">G String Practice</span>
+                        <span class="level-xp">Requires 50 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="7">
+                        <span class="level-number">7</span>
+                        <span class="level-name">D String Practice</span>
+                        <span class="level-xp">Requires 60 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="8">
+                        <span class="level-number">8</span>
+                        <span class="level-name">A String Practice</span>
+                        <span class="level-xp">Requires 70 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="9">
+                        <span class="level-number">9</span>
+                        <span class="level-name">E String Practice</span>
+                        <span class="level-xp">Requires 80 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="10">
+                        <span class="level-number">10</span>
+                        <span class="level-name">Enharmonic Challenge</span>
+                        <span class="level-xp">Requires 90 XP</span>
+                    </div>
+                    <div class="level-option locked" data-level="11">
+                        <span class="level-number">11</span>
+                        <span class="level-name">Ultimate Challenge</span>
+                        <span class="level-xp">Requires 100 XP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <canvas id="musicStaff" width="400" height="350"></canvas>
+        
+        <!-- Add note buttons -->
+        <div class="button-container">
+            <div class="note-buttons">
+                <div class="small-buttons-column">
+                    <button class="note-btn small-btn" data-note="flat" data-type="flat">♭</button>
+                    <button class="note-btn small-btn" data-note="sharp" data-type="sharp">♯</button>
+                </div>
+                <button class="note-btn" data-note="A" data-type="note">A</button>
+                <button class="note-btn" data-note="B" data-type="note">B</button>
+                <button class="note-btn" data-note="C" data-type="note">C</button>
+                <button class="note-btn" data-note="D" data-type="note">D</button>
+                <button class="note-btn" data-note="E" data-type="note">E</button>
+                <button class="note-btn" data-note="F" data-type="note">F</button>
+                <button class="note-btn" data-note="G" data-type="note">G</button>
+            </div>
+            <div class="finger-buttons">
+                <div class="small-buttons-column">
+                    <button class="finger-btn small-btn" data-finger="H" data-type="position">H</button>
+                    <button class="finger-btn small-btn" data-finger="L" data-type="position">L</button>
+                </div>
+                <button class="finger-btn" data-finger="0" data-type="number">0</button>
+                <button class="finger-btn" data-finger="1" data-type="number">1</button>
+                <button class="finger-btn" data-finger="2" data-type="number">2</button>
+                <button class="finger-btn" data-finger="3" data-type="number">3</button>
+                <button class="finger-btn" data-finger="4" data-type="number">4</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <div id="level-unlock-popup" class="level-unlock-popup">
+        <div class="popup-content">
+            <span class="popup-icon">🎉</span>
+            <span class="popup-text"></span>
+        </div>
+    </div>
+</body>
+</html> 
