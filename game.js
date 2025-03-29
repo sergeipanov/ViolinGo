@@ -90,6 +90,8 @@ let correctAttempts = 0;
 let sharpFlatGuessed = false;
 let fingerNumberGuessed = false;
 let fingerPositionGuessed = false;
+let unlockedLevels = new Set();
+let halfwayPointsReached = new Set();
 
 // Define notes that need a sharp
 const sharpNotes = ['C#4', 'F#4', 'G#4', 'C#5', 'D#5', 'F#5', 'G#5', 'A#5'];
@@ -826,8 +828,7 @@ function checkBothCorrect() {
 
     if (allCorrect) {
         // Add XP point when all required answers are correct
-        xpPoints++;
-        updateStats();
+        updateXP(1);  // Changed from xpPoints++ to updateXP(1)
         
         // Play the audio for the current note with retry mechanism
         const audio = audioFiles[currentNote];
@@ -920,4 +921,45 @@ window.addEventListener('beforeunload', () => {
 });
 
 // Start the game when the page loads
-window.addEventListener('load', initGame); 
+window.addEventListener('load', initGame);
+
+// Function to show halfway point popup
+function showHalfwayPopup() {
+    const popup = document.getElementById('level-unlock-popup');
+    const popupText = popup.querySelector('.popup-text');
+    
+    popupText.textContent = "You're half way to unlocking a new level. Keep practicing and improving your skills.";
+    popup.classList.add('show');
+    
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 3000);
+}
+
+// Function to update XP points
+function updateXP(points) {
+    xpPoints += points;
+    document.getElementById('xp-points').textContent = xpPoints;
+    
+    // Check for level unlocks
+    for (let level = 1; level <= 15; level++) {
+        if (isLevelUnlocked(level)) {
+            if (!unlockedLevels.has(level)) {
+                unlockedLevels.add(level);
+                showLevelUnlockPopup(level);
+            }
+        }
+    }
+    
+    // Check for halfway points
+    for (let level = 1; level <= 15; level++) {
+        const requiredXP = LEVEL_XP_REQUIREMENTS[level];
+        const halfwayXP = requiredXP / 2;
+        if (xpPoints >= halfwayXP && xpPoints < requiredXP) {
+            if (!halfwayPointsReached.has(level)) {
+                halfwayPointsReached.add(level);
+                showHalfwayPopup();
+            }
+        }
+    }
+} 
