@@ -15,30 +15,38 @@ const H4 = 'H4'; // High 4
 
 // Level constants
 const LEVEL_OPEN_STRINGS = 1;
-const LEVEL_NOTES_ON_TAPES = 2;
-const LEVEL_LOW_TWOS = 3;
-const LEVEL_HIGH_THREES = 4;
-const LEVEL_LOW_ONES_AND_FOURS = 5;
-const LEVEL_G_STRING = 6;
-const LEVEL_D_STRING = 7;
-const LEVEL_A_STRING = 8;
-const LEVEL_E_STRING = 9;
-const LEVEL_ENHARMONIC = 10;
-const LEVEL_ULTIMATE = 11;
+const LEVEL_A_STRING = 2;
+const LEVEL_D_STRING = 3;
+const LEVEL_E_STRING = 4;
+const LEVEL_G_STRING = 5;
+const LEVEL_NOTES_ON_TAPES = 6;
+const LEVEL_LOW_TWOS = 7;
+const LEVEL_HIGH_THREES = 8;
+const LEVEL_LOW_ONES_AND_FOURS = 9;
+const LEVEL_G_STRING_PRACTICE = 10;
+const LEVEL_D_STRING_PRACTICE = 11;
+const LEVEL_A_STRING_PRACTICE = 12;
+const LEVEL_E_STRING_PRACTICE = 13;
+const LEVEL_ENHARMONIC = 14;
+const LEVEL_ULTIMATE = 15;
 
 // XP requirements for each level
 const LEVEL_XP_REQUIREMENTS = {
     [LEVEL_OPEN_STRINGS]: 0,      // Level 1: No requirement
-    [LEVEL_NOTES_ON_TAPES]: 10,   // Level 2: 10 XP
-    [LEVEL_LOW_TWOS]: 20,         // Level 3: 20 XP
-    [LEVEL_HIGH_THREES]: 30,      // Level 4: 30 XP
-    [LEVEL_LOW_ONES_AND_FOURS]: 40, // Level 5: 40 XP
-    [LEVEL_G_STRING]: 50,         // Level 6: 50 XP
-    [LEVEL_D_STRING]: 60,         // Level 7: 60 XP
-    [LEVEL_A_STRING]: 70,         // Level 8: 70 XP
-    [LEVEL_E_STRING]: 80,         // Level 9: 80 XP
-    [LEVEL_ENHARMONIC]: 90,       // Level 10: 90 XP
-    [LEVEL_ULTIMATE]: 100         // Level 11: 100 XP
+    [LEVEL_A_STRING]: 10,         // Level 2: 10 XP
+    [LEVEL_D_STRING]: 20,         // Level 3: 20 XP
+    [LEVEL_E_STRING]: 30,         // Level 4: 30 XP
+    [LEVEL_G_STRING]: 40,         // Level 5: 40 XP
+    [LEVEL_NOTES_ON_TAPES]: 50,   // Level 6: 50 XP
+    [LEVEL_LOW_TWOS]: 60,         // Level 7: 60 XP
+    [LEVEL_HIGH_THREES]: 70,      // Level 8: 70 XP
+    [LEVEL_LOW_ONES_AND_FOURS]: 80, // Level 9: 80 XP
+    [LEVEL_G_STRING_PRACTICE]: 90, // Level 10: 90 XP
+    [LEVEL_D_STRING_PRACTICE]: 100, // Level 11: 100 XP
+    [LEVEL_A_STRING_PRACTICE]: 110, // Level 12: 110 XP
+    [LEVEL_E_STRING_PRACTICE]: 120, // Level 13: 120 XP
+    [LEVEL_ENHARMONIC]: 130,      // Level 14: 130 XP
+    [LEVEL_ULTIMATE]: 140         // Level 15: 140 XP
 };
 
 // Get canvas and context
@@ -107,6 +115,14 @@ function getLevelNotes() {
     switch(currentLevel) {
         case LEVEL_OPEN_STRINGS:
             return ['G3', 'D4', 'A4', 'E5'];
+        case LEVEL_A_STRING:
+            return ['A4', 'B4', 'C#5', 'D5'];
+        case LEVEL_D_STRING:
+            return ['D4', 'E4', 'F#4', 'G4'];
+        case LEVEL_E_STRING:
+            return ['E5', 'F#5', 'G#5', 'A5'];
+        case LEVEL_G_STRING:
+            return ['G3', 'A3', 'B3', 'C4'];
         case LEVEL_NOTES_ON_TAPES:
             return ['G3', 'A3', 'B3', 'C4', 'D4', 'E4', 'F#4', 'G4', 'A4', 'B4', 'C#5', 'D5', 'E5', 'F#5', 'G#5', 'A5', 'B5'];
         case LEVEL_LOW_TWOS:
@@ -115,13 +131,13 @@ function getLevelNotes() {
             return ['G3', 'A3', 'B3', 'C4', 'C#4', 'D4', 'E4', 'F#4', 'G4', 'G#4', 'A4', 'B4', 'C#5', 'D5', 'D#5', 'E5', 'F#5', 'G#5', 'A5', 'A#5', 'B5'];
         case LEVEL_LOW_ONES_AND_FOURS:
             return ['G3', 'Ab3', 'A3', 'Bb3', 'B3', 'C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5', 'C#5', 'D5', 'Eb5', 'E5', 'F5', 'F#5', 'G5', 'G#5', 'A5', 'Bb5'];
-        case LEVEL_G_STRING:
+        case LEVEL_G_STRING_PRACTICE:
             return ['G3', 'Ab3', 'A3', 'Bb3', 'B3', 'C4', 'C#4', 'Db4'];
-        case LEVEL_D_STRING:
+        case LEVEL_D_STRING_PRACTICE:
             return ['D4', 'Eb4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'Ab4'];
-        case LEVEL_A_STRING:
+        case LEVEL_A_STRING_PRACTICE:
             return ['A4', 'Bb4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'Eb5'];
-        case LEVEL_E_STRING:
+        case LEVEL_E_STRING_PRACTICE:
             return ['E5', 'F5', 'F#5', 'G5', 'G#5', 'A5', 'A#5', 'Bb5', 'B5'];
         case LEVEL_ENHARMONIC:
             return ['C#4', 'Db4', 'G#4', 'Ab4', 'D#5', 'Eb5', 'A#5', 'Bb5'];
@@ -399,16 +415,63 @@ function showLevelUnlockPopup(level) {
     const popup = document.getElementById('level-unlock-popup');
     const popupText = popup.querySelector('.popup-text');
     
-    // Set the popup text
-    popupText.textContent = `Congrats! Level ${level} Unlocked! You can now practice ${LEVEL_DESCRIPTIONS[level]}`;
+    let message = '';
+    switch(level) {
+        case 1:
+            message = "Level 1: Open Strings - Learn the basic open strings of the violin!";
+            break;
+        case 2:
+            message = "Level 2: A String Notes - Master the first four notes on the A string!";
+            break;
+        case 3:
+            message = "Level 3: D String Notes - Learn the first four notes on the D string!";
+            break;
+        case 4:
+            message = "Level 4: E String Notes - Practice the first four notes on the E string!";
+            break;
+        case 5:
+            message = "Level 5: G String Notes - Master the first four notes on the G string!";
+            break;
+        case 6:
+            message = "Level 6: Notes on Tapes - Learn to play notes using finger tapes!";
+            break;
+        case 7:
+            message = "Level 7: Low 2's - Master the low 2 finger position across all strings!";
+            break;
+        case 8:
+            message = "Level 8: High 3's - Learn the high 3 finger position across all strings!";
+            break;
+        case 9:
+            message = "Level 9: Low 1's and Low 4's - Practice low 1 and low 4 finger positions!";
+            break;
+        case 10:
+            message = "Level 10: G String Practice - Master all notes on the G string!";
+            break;
+        case 11:
+            message = "Level 11: D String Practice - Master all notes on the D string!";
+            break;
+        case 12:
+            message = "Level 12: A String Practice - Master all notes on the A string!";
+            break;
+        case 13:
+            message = "Level 13: E String Practice - Master all notes on the E string!";
+            break;
+        case 14:
+            message = "Level 14: Enharmonic Challenge - Learn enharmonic equivalents!";
+            break;
+        case 15:
+            message = "Level 15: Ultimate Challenge - Test your knowledge of every note in first position!";
+            break;
+        default:
+            message = `Level ${level} unlocked!`;
+    }
     
-    // Show the popup
+    popupText.textContent = message;
     popup.classList.add('show');
     
-    // Hide the popup after 3 seconds
     setTimeout(() => {
         popup.classList.remove('show');
-    }, 5000);
+    }, 3000);
 }
 
 // Function to update level options UI
