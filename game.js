@@ -92,6 +92,7 @@ let fingerNumberGuessed = false;
 let fingerPositionGuessed = false;
 let unlockedLevels = new Set();
 let halfwayPointsReached = new Set();
+let lastNote = null;  // Track the last note
 
 // Define notes that need a sharp
 const sharpNotes = ['C#4', 'F#4', 'G#4', 'C#5', 'D#5', 'F#5', 'G#5', 'A#5'];
@@ -153,8 +154,17 @@ function getLevelNotes() {
 // Function to generate a random note
 function getRandomNote() {
     const levelNotes = getLevelNotes();
-    const randomIndex = Math.floor(Math.random() * levelNotes.length);
-    return levelNotes[randomIndex];
+    let availableNotes = levelNotes.filter(note => note !== lastNote);  // Exclude last note
+    
+    // If we've used all notes except the last one, reset available notes
+    if (availableNotes.length === 0) {
+        availableNotes = levelNotes;
+    }
+    
+    const randomIndex = Math.floor(Math.random() * availableNotes.length);
+    const newNote = availableNotes[randomIndex];
+    lastNote = newNote;  // Update last note
+    return newNote;
 }
 
 // Function to draw the staff lines
