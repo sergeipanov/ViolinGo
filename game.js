@@ -396,20 +396,6 @@ function isLevelUnlocked(level) {
     return xpPoints >= LEVEL_XP_REQUIREMENTS[level];
 }
 
-// Level descriptions for popup messages
-const LEVEL_DESCRIPTIONS = {
-    [LEVEL_NOTES_ON_TAPES]: "notes that use fingers on tapes",
-    [LEVEL_LOW_TWOS]: "low 2 finger position on all strings",
-    [LEVEL_HIGH_THREES]: "high 3 finger position on all strings",
-    [LEVEL_LOW_ONES_AND_FOURS]: "low 1 and low 4 finger positions",
-    [LEVEL_G_STRING]: "all notes in the G string",
-    [LEVEL_D_STRING]: "all notes in the D string",
-    [LEVEL_A_STRING]: "all notes in the A string",
-    [LEVEL_E_STRING]: "all notes in the E string",
-    [LEVEL_ENHARMONIC]: "enharmonic equivalents across all strings",
-    [LEVEL_ULTIMATE]: "all notes in first position on the violin"
-};
-
 // Function to show level unlock popup
 function showLevelUnlockPopup(level) {
     const popup = document.getElementById('level-unlock-popup');
@@ -570,6 +556,62 @@ function updateGameState() {
     document.querySelectorAll('.note-btn, .finger-btn').forEach(btn => {
         btn.classList.remove('correct', 'incorrect');
     });
+    
+    // Update level description text
+    const levelDescriptionText = document.getElementById('level-description-text');
+    if (levelDescriptionText) {
+        let message = '';
+        switch(currentLevel) {
+            case 1:
+                message = "Level 1: Open Strings - Learn the basic open strings of the violin!";
+                break;
+            case 2:
+                message = "Level 2: A String Notes - Master the first four notes on the A string!";
+                break;
+            case 3:
+                message = "Level 3: D String Notes - Learn the first four notes on the D string!";
+                break;
+            case 4:
+                message = "Level 4: E String Notes - Practice the first four notes on the E string!";
+                break;
+            case 5:
+                message = "Level 5: G String Notes - Master the first four notes on the G string!";
+                break;
+            case 6:
+                message = "Level 6: Notes on Tapes - Learn to play notes using finger tapes!";
+                break;
+            case 7:
+                message = "Level 7: Low 2's - Master the low 2 finger position across all strings!";
+                break;
+            case 8:
+                message = "Level 8: High 3's - Learn the high 3 finger position across all strings!";
+                break;
+            case 9:
+                message = "Level 9: Low 1's and Low 4's - Practice low 1 and low 4 finger positions!";
+                break;
+            case 10:
+                message = "Level 10: G String Practice - Master all notes on the G string!";
+                break;
+            case 11:
+                message = "Level 11: D String Practice - Master all notes on the D string!";
+                break;
+            case 12:
+                message = "Level 12: A String Practice - Master all notes on the A string!";
+                break;
+            case 13:
+                message = "Level 13: E String Practice - Master all notes on the E string!";
+                break;
+            case 14:
+                message = "Level 14: Enharmonic Challenge - Learn enharmonic equivalents!";
+                break;
+            case 15:
+                message = "Level 15: Ultimate Challenge - Test your knowledge of every note in first position!";
+                break;
+            default:
+                message = `Level ${currentLevel} unlocked!`;
+        }
+        levelDescriptionText.textContent = message;
+    }
     
     // Get notes for current level
     const levelNotes = getLevelNotes();
