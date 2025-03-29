@@ -19,69 +19,101 @@
             <p class="intro-text">the game where you learn, play, and improve your violin skills by mastering note reading and finger positions!</p>
         </div>
 
-        <div class="game-levels">
-            <h2>Game Levels</h2>
-            <p>Each game level corresponds to specific violin skills:</p>
-            <ul class="level-list">
-                <li><strong>Level 1:</strong> Open Strings – Learn and practice the open strings of the violin.</li>
-                <li><strong>Level 2:</strong> Notes on the A String – Learn notes A4, B4, C#4, D4 on the A string.</li>
-                <li><strong>Level 3:</strong> Notes on the D String – Learn notes D4, E4, F#4, G4 on the D string.</li>
-                <li><strong>Level 4:</strong> Notes on the E String – Learn notes E5, F#5, G#5, A5 on the E string.</li>
-                <li><strong>Level 5:</strong> Notes on the G String – Learn notes G3, A3, B3, C3 on the G string.</li>
-                <li><strong>Level 6:</strong> Notes on Tapes – Discover and play notes using fingers placed on tapes.</li>
-                <li><strong>Level 7:</strong> Low 2's – Learn the low 2 finger position across all strings.</li>
-                <li><strong>Level 8:</strong> High 3's – Master the high 3 finger position across all strings.</li>
-                <li><strong>Level 9:</strong> Low 1's and Low 4's – Introduce low 1 and low 4 finger positions.</li>
-                <li><strong>Level 10:</strong> G String Practice – Focus exclusively on all notes of the G string.</li>
-                <li><strong>Level 11:</strong> D String Practice – Focus exclusively on all notes of the D string.</li>
-                <li><strong>Level 12:</strong> A String Practice – Focus exclusively on all notes of the A string.</li>
-                <li><strong>Level 13:</strong> E String Practice – Focus exclusively on all notes of the E string.</li>
-                <li><strong>Level 14:</strong> Enharmonic Challenge – Master enharmonic equivalents across all strings.</li>
-                <li><strong>Level 15:</strong> Ultimate Challenge – Test your knowledge of every note in the first position!</li>
-            </ul>
-        </div>
-
         <div class="how-to-play">
-            <h2>How to Play</h2>
-            <p>The game displays a note, and you must select:</p>
-            <ul class="game-instructions">
-                <li>The correct note name (e.g., A, B, C, etc.)</li>
-                <li>The correct finger number:
-                    <ul class="finger-list">
-                        <li>0 = Open String</li>
-                        <li>1 = Index Finger</li>
-                        <li>2 = Middle Finger (always specify High or Low)</li>
-                        <li>3 = Ring Finger</li>
-                        <li>4 = Pinky Finger</li>
-                    </ul>
-                </li>
-                <li>The correct accidental (sharp ♯ or flat ♭) when needed.</li>
-            </ul>
+            <div class="section-header" onclick="toggleSection('how-to-play-content')">
+                <h2>How to Play</h2>
+                <span class="arrow">▼</span>
+            </div>
+            <div id="how-to-play-content" class="section-content">
+                <p>The game displays a note, and you must select:</p>
+                <ul class="game-instructions">
+                    <li>The correct note name (e.g., A, B, C, etc.)</li>
+                    <li>The correct finger number:
+                        <ul class="finger-list">
+                            <li>0 = Open String</li>
+                            <li>1 = Index Finger</li>
+                            <li>2 = Middle Finger (always specify High or Low)</li>
+                            <li>3 = Ring Finger</li>
+                            <li>4 = Pinky Finger</li>
+                        </ul>
+                    </li>
+                    <li>Select if the finger is Low (L) or High (H)</li>
+                    <li>The correct accidental (sharp ♯ or flat ♭) when needed.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="rules-section">
-            <h2>Important Rules</h2>
-            <ul class="rules-list">
-                <li>Notes played with fingers 1, 3, or 4 on tapes only require selecting the finger number.</li>
-                <li>All 2's must be specified as High or Low.</li>
-                <li>If the note makes no sound, it means you're missing a selection—either note name, finger number, accidental, or High/Low option.</li>
-            </ul>
+            <div class="section-header" onclick="toggleSection('rules-content')">
+                <h2>Important Rules</h2>
+                <span class="arrow">▼</span>
+            </div>
+            <div id="rules-content" class="section-content">
+                <ul class="rules-list">
+                    <li>Notes played with fingers 1, 3, or 4 on tapes only require selecting the finger number.</li>
+                    <li>All 2's must be specified as High or Low.</li>
+                    <li>If the note makes no sound, it means you're missing a selection—either note name, finger number, accidental, or High/Low option.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="scoring-section">
-            <h2>Scoring and Progress</h2>
-            <ul class="scoring-list">
-                <li>Start at Level 1. Earn 10 XP per level to unlock the next.</li>
-                <li>Each correct answer gives you 1 XP.</li>
-                <li>After unlocking a level, you can always revisit and practice previous levels.</li>
-                <li>Accuracy percentage is provided for your reference and does not impact scoring.</li>
-                <li>To restart your progress, simply reload the page and begin your violin journey again!</li>
-            </ul>
+            <div class="section-header" onclick="toggleSection('scoring-content')">
+                <h2>Scoring and Progress</h2>
+                <span class="arrow">▼</span>
+            </div>
+            <div id="scoring-content" class="section-content">
+                <ul class="scoring-list">
+                    <li>Start at Level 1. Earn 10 XP per level to unlock the next.</li>
+                    <li>Each correct answer gives you 1 XP.</li>
+                    <li>After unlocking a level, you can always revisit and practice previous levels.</li>
+                    <li>Accuracy percentage is provided for your reference and does not impact scoring.</li>
+                    <li>To restart your progress, simply reload the page and begin your violin journey again!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="game-levels">
+            <div class="section-header" onclick="toggleSection('game-levels-content')">
+                <h2>Game Levels</h2>
+                <span class="arrow">▼</span>
+            </div>
+            <div id="game-levels-content" class="section-content">
+                <p>Each game level corresponds to specific violin skills:</p>
+                <ul class="level-list">
+                    <li><strong>Level 1:</strong> Open Strings – Learn and practice the open strings of the violin.</li>
+                    <li><strong>Level 2:</strong> Notes on the A String – Learn notes A4, B4, C#4, D4 on the A string.</li>
+                    <li><strong>Level 3:</strong> Notes on the D String – Learn notes D4, E4, F#4, G4 on the D string.</li>
+                    <li><strong>Level 4:</strong> Notes on the E String – Learn notes E5, F#5, G#5, A5 on the E string.</li>
+                    <li><strong>Level 5:</strong> Notes on the G String – Learn notes G3, A3, B3, C3 on the G string.</li>
+                    <li><strong>Level 6:</strong> Notes on Tapes – Discover and play notes using fingers placed on tapes.</li>
+                    <li><strong>Level 7:</strong> Low 2's – Learn the low 2 finger position across all strings.</li>
+                    <li><strong>Level 8:</strong> High 3's – Master the high 3 finger position across all strings.</li>
+                    <li><strong>Level 9:</strong> Low 1's and Low 4's – Introduce low 1 and low 4 finger positions.</li>
+                    <li><strong>Level 10:</strong> G String Practice – Focus exclusively on all notes of the G string.</li>
+                    <li><strong>Level 11:</strong> D String Practice – Focus exclusively on all notes of the D string.</li>
+                    <li><strong>Level 12:</strong> A String Practice – Focus exclusively on all notes of the A string.</li>
+                    <li><strong>Level 13:</strong> E String Practice – Focus exclusively on all notes of the E string.</li>
+                    <li><strong>Level 14:</strong> Enharmonic Challenge – Master enharmonic equivalents across all strings.</li>
+                    <li><strong>Level 15:</strong> Ultimate Challenge – Test your knowledge of every note in the first position!</li>
+                </ul>
+            </div>
         </div>
 
         <div class="closing-section">
             <p>Enjoy learning and mastering the violin with Violin Go!</p>
         </div>
     </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const header = content.previousElementSibling;
+            
+            // Toggle the expanded class
+            content.classList.toggle('expanded');
+            header.classList.toggle('expanded');
+        }
+    </script>
 </body>
 </html> 
